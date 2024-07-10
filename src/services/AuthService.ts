@@ -14,8 +14,7 @@ class AuthService {
       throw new Error('Username or email already exists.');
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = password;
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ username, email, password: hashedPassword });
 
     return newUser.save();
