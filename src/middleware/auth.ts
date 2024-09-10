@@ -22,8 +22,7 @@ const authMiddleware = async (
     if (!user) {
       throw new Error('User not found during JWT authentication');
     }
-
-    //@ts-ignore
+    // @ts-ignore
     req.user = user;
     next();
   } catch (err) {
