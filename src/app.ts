@@ -1,8 +1,9 @@
-import express from "express";
-import mongoose from "mongoose";
+import express from 'express';
+import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import authRoutes from "./routes/auth";
+import authRoutes from './routes/auth';
+import userRoutes from './routes/user';
 
 dotenv.config();
 
@@ -14,14 +15,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //Database connection
-mongoose.connect(process.env.MONGOOSE_URI as string).then(() => {
+mongoose
+  .connect(process.env.MONGOOSE_URI as string)
+  .then(() => {
     console.log('Connected to MongoDB');
-}).catch((err) => {
+  })
+  .catch((err) => {
     console.log('MongoDB connection error:', err);
-});
+  });
 
 //Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on PORT = ${PORT}`));
